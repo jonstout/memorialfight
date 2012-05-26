@@ -6,3 +6,4 @@
 *.cachefile
 memorialfight/memorialfight/bin/
 memorialfight/memorialfightContent/obj/x86/Debug/ContentPipeline.xml
+*.psd
