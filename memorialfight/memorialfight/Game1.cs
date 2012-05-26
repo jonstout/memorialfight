@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using memorialfight.objects;
 
 namespace memorialfight
 {
@@ -18,6 +19,9 @@ namespace memorialfight
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        
+        // Stuff to put in a class
+        WorldObject wObjTest;
 
         public Game1()
         {
@@ -34,7 +38,7 @@ namespace memorialfight
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -48,6 +52,12 @@ namespace memorialfight
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            // Build WorldObject for testing. Need a better player texture.
+            Texture2D sprite1 = Content.Load<Texture2D>("sprites/sprite1");
+            Vector2 sprite1Position = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2,
+                graphics.GraphicsDevice.Viewport.Height / 2);
+            wObjTest = new WorldObject(sprite1Position, new Rectangle(), sprite1);
         }
 
         /// <summary>
@@ -84,7 +94,10 @@ namespace memorialfight
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            // wObjTest works! Now onto the actor class then player class.
+            wObjTest.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
