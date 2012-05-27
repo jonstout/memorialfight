@@ -44,7 +44,6 @@ namespace memorialfight.objects.actor
 
         public Boolean StandingOn(Rectangle r_rect)
         {
-            Console.WriteLine(this.bottomBar.Intersects(r_rect).ToString() + r_rect.ToString() + this.bottomBar.ToString());
             if (this.bottomBar.Intersects(r_rect))
             {
                 this.jumping = false;
