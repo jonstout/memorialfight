@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using memorialfight.objects;
+using memorialfight.objects.actor;
 
 namespace memorialfight
 {
@@ -21,7 +22,8 @@ namespace memorialfight
         SpriteBatch spriteBatch;
         
         // Stuff to put in a class
-        WorldObject wObjTest;
+        Player player1;
+        GameObject objTest;
 
         public Game1()
         {
@@ -38,7 +40,11 @@ namespace memorialfight
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            
+            graphics.PreferredBackBufferWidth = graphics.GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = graphics.GraphicsDevice.DisplayMode.Height;
+            //graphics.ToggleFullScreen();
+            graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -57,7 +63,13 @@ namespace memorialfight
             Texture2D sprite1 = Content.Load<Texture2D>("sprites/sprite1");
             Vector2 sprite1Position = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2,
                 graphics.GraphicsDevice.Viewport.Height / 2);
-            wObjTest = new WorldObject(sprite1Position, new Rectangle(), sprite1);
+            Rectangle sprite1Rect = new Rectangle((int)sprite1Position.X, (int)sprite1Position.Y, sprite1.Width, sprite1.Height);
+            player1 = new Player(sprite1Position, sprite1Rect, sprite1, 1);
+            
+            // Ground
+            Vector2 groundPosition = new Vector2(0, graphics.GraphicsDevice.Viewport.Height-100);
+            Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, GraphicsDevice.Viewport.Width, 50);
+            objTest = new GameObject(groundPosition, groundRect);
         }
 
         /// <summary>
@@ -82,6 +94,14 @@ namespace memorialfight
 
             // TODO: Add your update logic here
 
+            // Player to ground interactions
+            if (!player1.StandingOn(objTest.GetRect()))
+            {
+                player1.Update();
+            }
+
+            player1.MovePlayer(Keyboard.GetState());
+
             base.Update(gameTime);
         }
 
@@ -96,7 +116,7 @@ namespace memorialfight
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             // wObjTest works! Now onto the actor class then player class.
-            wObjTest.Draw(spriteBatch);
+            player1.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

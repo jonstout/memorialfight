@@ -23,39 +23,24 @@ namespace memorialfight.objects.actor
             this.id = id;
         }
 
-        public void Move(KeyboardState keystate)
+        public void MovePlayer(KeyboardState keystate)
         {
-            if (keystate.IsKeyDown(Keys.A) && this.velocityX > -5.4f)
+            if (keystate.IsKeyDown(Keys.A))
             {
-                this.velocityX -= this.accelerationX;
+                this.MoveLeft();
             }
-            if (keystate.IsKeyDown(Keys.D) && this.velocityX < 5.4f)
+            if (keystate.IsKeyDown(Keys.D))
             {
-                this.velocityX += this.accelerationX;
+                this.MoveRight();
             }
             if (!keystate.IsKeyDown(Keys.A) && !keystate.IsKeyDown(Keys.D))
             {
-                if (Math.Abs(this.velocityX) < .2f)
-                {
-                    this.velocityX = 0.0f;
-                }
-                else if (this.velocityX >= 0f)
-                {
-                    this.velocityX -= this.accelerationX;
-                }
-                else if (this.velocityX <= 0f)
-                {
-                    this.velocityX += this.accelerationX;
-                }
+                this.Pause();
             }
             if (keystate.IsKeyDown(Keys.Space))
             {
-                this.velocityY = -15f;
-                this.Update();
-                Console.WriteLine("Pushed Spacebar");
+                this.Jump();
             }
-            this.pos.X += this.velocityX;
-            this.rect.X = (int)this.pos.X;
         }
     }
 }

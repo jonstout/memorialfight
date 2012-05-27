@@ -19,10 +19,100 @@ namespace memorialfight.objects.actor
 {
     class Actor : memorialfight.objects.WorldObject
     {
+        protected float velocityY;
+        protected float velocityX;
+        protected float accelerationY;
+        protected float accelerationX;
+        protected Boolean jumping;
+        protected float maxAccelerationX;
+        protected float maxAccelerationY;
+
         public Actor(Vector2 pos, Rectangle rect, Texture2D texture) :
             base(pos, rect, texture)
         {
+            this.maxAccelerationX = 5.4f;
+            this.maxAccelerationY = 6.5f;
+            this.accelerationY = 6.5f;
+            this.accelerationX = .3f;
+            this.jumping = true;
+        }
 
+        public void SetMaxAccelerationX(float maxAcceleration)
+        {
+            this.maxAccelerationX = maxAcceleration;
+        }
+
+        public Boolean StandingOn(Rectangle r_rect)
+        {
+            Console.WriteLine(this.bottomBar.Intersects(r_rect).ToString() + r_rect.ToString() + this.bottomBar.ToString());
+            if (this.bottomBar.Intersects(r_rect))
+            {
+                this.jumping = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public virtual void Update()
+        {
+            if (this.velocityY < this.maxAccelerationY)
+            {
+                this.velocityY += this.accelerationY;
+            }
+            this.Move(new Vector2(0f, this.velocityY));
+        }
+
+        public void MoveLeft()
+        {
+            if (this.velocityX > -this.maxAccelerationX)
+            {
+                this.velocityX -= this.accelerationX;
+            }
+            this.Move(new Vector2(this.velocityX, 0f));
+        }
+
+        public void MoveRight()
+        {
+            if (this.velocityX < this.maxAccelerationX)
+            {
+                this.velocityX += this.accelerationX;
+            }
+            this.Move(new Vector2(this.velocityX, 0f));
+        }
+
+        public void Pause()
+        {
+            if (Math.Abs(this.velocityX) < .2f)
+            {
+                this.velocityX = 0.0f;
+            }
+            else if (this.velocityX > 0f)
+            {
+                this.velocityX -= this.accelerationX;
+            }
+            else if (this.velocityX < 0f)
+            {
+                this.velocityX += this.accelerationX;
+            }
+            this.Move(new Vector2(this.velocityX, 0f));
+        }
+
+        public void Jump()
+        {
+            if (!this.jumping)
+            {
+                this.velocityY = -15f;
+                this.Move(new Vector2(0f, this.velocityY));
+                this.jumping = true;
+            }
+        }
+
+        public void Fire()
+        {
+            // TODO: Make an object to fire at shit.
         }
     }
 }

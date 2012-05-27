@@ -14,8 +14,8 @@ namespace memorialfight.objects
 {
     class GameObject
     {
-        protected Vector2 pos;
-        protected Rectangle rect;
+        public Vector2 pos;
+        public Rectangle rect;
 
         /* GameObject is the base class for anthing in the game.
          *  
@@ -48,6 +48,11 @@ namespace memorialfight.objects
             {
                 return false;
             }
+        }
+
+        public Rectangle GetRect()
+        {
+            return this.rect;
         }
     }
 }
