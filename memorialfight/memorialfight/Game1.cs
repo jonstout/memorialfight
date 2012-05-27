@@ -76,10 +76,20 @@ namespace memorialfight
             Console.WriteLine(graphics.GraphicsDevice.Viewport.Height.ToString());
             Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
 
+            float groundPosY = groundPosition.Y;
             for (int i = 0; i < 16; i++)
             {
-                groundPosition = new Vector2(120*i, groundPosition.Y);
-                groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
+                if (i == 0 || i == 15)
+                {
+                    groundPosition = new Vector2(120 * i, groundPosY - 120);
+                    groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
+                }
+                else
+                {
+                    groundPosition = new Vector2(120 * i, groundPosY);
+                    groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
+                }
+                
                 world.AddLast(new EnvironmentObject(groundPosition, groundRect, woodTex));
             }
         }
@@ -107,10 +117,10 @@ namespace memorialfight
             // TODO: Add your update logic here
 
             // Player to ground interactions
-            Boolean touchingGround = false;
+            /*Boolean touchingGround = false;
             for (int i = 0; i < world.Count; i++)
             {
-                if (player1.StandingOn(world.ElementAt(i).GetRect()))
+                if (player1.StandingOn(world.ElementAt(i).rect))
                 {
                     touchingGround = true;
                     break;
@@ -123,10 +133,11 @@ namespace memorialfight
             }
             if (!touchingGround)
             {
-                player1.Update();
-            }
+                player1.Update(world);
+            }*/
 
             player1.MovePlayer(Keyboard.GetState());
+            player1.Update(world);
 
             base.Update(gameTime);
         }

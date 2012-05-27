@@ -37,12 +37,13 @@ namespace memorialfight.objects
             this.leftBar = new Rectangle((int)pos.X, (int)pos.Y, 20, rect.Height);
             this.rightBar = new Rectangle((int)pos.X + rect.Width - 20, (int)pos.Y, 20, rect.Height);
             this.topBar = new Rectangle((int)pos.X + 20, (int)pos.Y, rect.Width - 40, 20);
-            this.bottomBar = new Rectangle((int)pos.X + 20, (int)pos.Y + rect.Height - 20, rect.Width - 40, 20);
+            this.bottomBar = new Rectangle((int)pos.X + 20, (int)pos.Y + (rect.Height - 20), rect.Width - 40, 20);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.texture, this.pos, Color.White);
+            spriteBatch.Draw(this.texture, this.bottomBar, Color.Wheat);
         }
 
         public void Move(Vector2 velocity)
@@ -61,6 +62,24 @@ namespace memorialfight.objects
             this.topBar.Y += (int)velocity.Y;
             this.bottomBar.X += (int)velocity.X;
             this.bottomBar.Y += (int)velocity.Y;
+        }
+
+        public void Position(Vector2 cords)
+        {
+            // Update this WorldObject's position
+            this.pos.X = (int)cords.X;
+            this.pos.Y = (int)cords.Y;
+            // Update this WorldObject collision box's position
+            this.rect.X = (int)cords.X;
+            this.rect.Y = (int)cords.Y;
+            this.leftBar.X = (int)cords.X;
+            this.leftBar.Y = (int)cords.Y;
+            this.rightBar.X = (int)cords.X + (this.rect.Width - 20);
+            this.rightBar.Y = (int)cords.Y;
+            this.topBar.X = (int)cords.X + 20;
+            this.topBar.Y = (int)cords.Y;
+            this.bottomBar.X = (int)cords.X + 20;
+            this.bottomBar.Y = (int)cords.Y + (rect.Height - 20);
         }
     }
 }

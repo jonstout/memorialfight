@@ -49,10 +49,5 @@ namespace memorialfight.objects
                 return false;
             }
         }
-
-        public Rectangle GetRect()
-        {
-            return this.rect;
-        }
     }
 }

@@ -42,13 +42,17 @@ namespace memorialfight.objects.actor
             this.maxAccelerationX = maxAcceleration;
         }
 
-        public Boolean StandingOn(Rectangle r_rect)
+        private Boolean StandingOn(Rectangle r_rect)
         {
             if (this.bottomBar.Intersects(r_rect))
             {
-                this.jumping = false;
-                this.velocityY = 0f;
-                this.pos.Y = r_rect.Y - this.rect.Height;
+                // If depth is too low the character keeps falling just enough to
+                // snap back to the correct position. This makes things work poorly.
+                float depth = (this.bottomBar.Y + this.bottomBar.Height) - r_rect.Y;
+                if (depth > 4)
+                {
+                    this.Position(new Vector2(this.pos.X, r_rect.Y - this.rect.Height + 1));
+                }
                 return true;
             }
             else
@@ -57,13 +61,33 @@ namespace memorialfight.objects.actor
             }
         }
 
-        public virtual void Update()
+        private Boolean GroundCollision(LinkedList<EnvironmentObject> objects)
         {
-            if (this.velocityY < this.maxAccelerationY)
+            for (int i = 0; i < objects.Count; i++)
             {
-                this.velocityY += this.accelerationY;
+                if (this.StandingOn(objects.ElementAt(i).rect))
+                {
+                    this.jumping = false;
+                    return true;
+                }
             }
-            this.Move(new Vector2(0f, this.velocityY));
+            this.jumping = true;
+            return false;
+        }
+
+        public virtual void Update(LinkedList<EnvironmentObject> objects)
+        {
+            // Do ground collisions with environment
+            //this.GroundCollision(objects);
+            if (!this.GroundCollision(objects))
+            {
+                if (this.velocityY < this.maxAccelerationY)
+                {
+                    this.velocityY += this.accelerationY;
+                }
+            }
+            Console.WriteLine(this.velocityX.ToString() + " " + this.velocityY.ToString());
+            this.Move(new Vector2(this.velocityX, this.velocityY));
         }
 
         public void MoveLeft()
@@ -72,7 +96,6 @@ namespace memorialfight.objects.actor
             {
                 this.velocityX -= this.accelerationX;
             }
-            this.Move(new Vector2(this.velocityX, 0f));
         }
 
         public void MoveRight()
@@ -81,7 +104,6 @@ namespace memorialfight.objects.actor
             {
                 this.velocityX += this.accelerationX;
             }
-            this.Move(new Vector2(this.velocityX, 0f));
         }
 
         public void Pause()
@@ -98,15 +120,13 @@ namespace memorialfight.objects.actor
             {
                 this.velocityX += this.accelerationX;
             }
-            this.Move(new Vector2(this.velocityX, 0f));
         }
 
         public void Jump()
         {
             if (!this.jumping)
             {
-                this.velocityY = -35f;
-                this.Move(new Vector2(0f, this.velocityY));
+                this.velocityY = -45f;
                 this.jumping = true;
             }
         }
