@@ -25,6 +25,8 @@ namespace memorialfight
         Player player1;
         EnvironmentObject ground;
 
+        LinkedList<EnvironmentObject> world;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -58,6 +60,8 @@ namespace memorialfight
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            world = new LinkedList<EnvironmentObject>();
+
 
             // Build WorldObject for testing. Need a better player texture.
             Texture2D sprite1 = Content.Load<Texture2D>("sprites/sprite1");
@@ -67,10 +71,17 @@ namespace memorialfight
             player1 = new Player(sprite1Position, sprite1Rect, sprite1, 1);
             
             // Ground
+            Texture2D woodTex = Content.Load<Texture2D>("sprites/wood");
             Vector2 groundPosition = new Vector2(0, graphics.GraphicsDevice.Viewport.Height-400);
             Console.WriteLine(graphics.GraphicsDevice.Viewport.Height.ToString());
-            Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, GraphicsDevice.Viewport.Width, 50);
-            ground = new EnvironmentObject(groundPosition, groundRect, sprite1);
+            Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
+
+            for (int i = 1; i < 17; i++)
+            {
+                groundPosition = new Vector2(120*i, groundPosition.Y);
+                groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
+                world.AddLast(new EnvironmentObject(groundPosition, groundRect, woodTex));
+            }
         }
 
         /// <summary>
@@ -96,13 +107,23 @@ namespace memorialfight
             // TODO: Add your update logic here
 
             // Player to ground interactions
-            if (!player1.StandingOn(ground.GetRect()))
+            Boolean touchingGround = false;
+            for (int i = 0; i < world.Count; i++)
+            {
+                if (player1.StandingOn(world.ElementAt(i).GetRect()))
+                {
+                    touchingGround = true;
+                    break;
+                }
+                else
+                {
+                    player1.jumping = true;
+                    touchingGround = false;
+                }
+            }
+            if (!touchingGround)
             {
                 player1.Update();
-            }
-            else
-            {
-
             }
 
             player1.MovePlayer(Keyboard.GetState());
@@ -122,7 +143,11 @@ namespace memorialfight
             spriteBatch.Begin();
             // wObjTest works! Now onto the actor class then player class.
             player1.Draw(spriteBatch);
-            ground.Draw(spriteBatch);
+            for (int i = 0; i < world.Count; i++)
+            {
+                world.ElementAt(i).Draw(spriteBatch);
+            }
+            //ground.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

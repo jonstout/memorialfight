@@ -23,7 +23,7 @@ namespace memorialfight.objects.actor
         protected float velocityX;
         protected float accelerationY;
         protected float accelerationX;
-        protected Boolean jumping;
+        public Boolean jumping;
         protected float maxAccelerationX;
         protected float maxAccelerationY;
 
@@ -48,6 +48,7 @@ namespace memorialfight.objects.actor
             {
                 this.jumping = false;
                 this.velocityY = 0f;
+                this.pos.Y = r_rect.Y - this.rect.Height;
                 return true;
             }
             else
