@@ -23,7 +23,7 @@ namespace memorialfight
         
         // Stuff to put in a class
         Player player1;
-        GameObject objTest;
+        EnvironmentObject ground;
 
         public Game1()
         {
@@ -67,9 +67,10 @@ namespace memorialfight
             player1 = new Player(sprite1Position, sprite1Rect, sprite1, 1);
             
             // Ground
-            Vector2 groundPosition = new Vector2(0, graphics.GraphicsDevice.Viewport.Height-100);
+            Vector2 groundPosition = new Vector2(0, graphics.GraphicsDevice.Viewport.Height-400);
+            Console.WriteLine(graphics.GraphicsDevice.Viewport.Height.ToString());
             Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, GraphicsDevice.Viewport.Width, 50);
-            objTest = new GameObject(groundPosition, groundRect);
+            ground = new EnvironmentObject(groundPosition, groundRect, sprite1);
         }
 
         /// <summary>
@@ -95,9 +96,13 @@ namespace memorialfight
             // TODO: Add your update logic here
 
             // Player to ground interactions
-            if (!player1.StandingOn(objTest.GetRect()))
+            if (!player1.StandingOn(ground.GetRect()))
             {
                 player1.Update();
+            }
+            else
+            {
+
             }
 
             player1.MovePlayer(Keyboard.GetState());
@@ -117,6 +122,7 @@ namespace memorialfight
             spriteBatch.Begin();
             // wObjTest works! Now onto the actor class then player class.
             player1.Draw(spriteBatch);
+            ground.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

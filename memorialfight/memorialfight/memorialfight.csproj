@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="objects\actor\Actor.cs" />
     <Compile Include="objects\actor\Player.cs" />
+    <Compile Include="objects\EnvironmentObject.cs" />
     <Compile Include="objects\GameObject.cs" />
     <Compile Include="objects\WorldObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

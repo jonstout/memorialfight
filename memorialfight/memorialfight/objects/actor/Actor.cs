@@ -31,7 +31,7 @@ namespace memorialfight.objects.actor
             base(pos, rect, texture)
         {
             this.maxAccelerationX = 5.4f;
-            this.maxAccelerationY = 6.5f;
+            this.maxAccelerationY = 1.3f;
             this.accelerationY = 6.5f;
             this.accelerationX = .3f;
             this.jumping = true;
@@ -48,6 +48,7 @@ namespace memorialfight.objects.actor
             if (this.bottomBar.Intersects(r_rect))
             {
                 this.jumping = false;
+                this.velocityY = 0f;
                 return true;
             }
             else
@@ -104,7 +105,7 @@ namespace memorialfight.objects.actor
         {
             if (!this.jumping)
             {
-                this.velocityY = -15f;
+                this.velocityY = -35f;
                 this.Move(new Vector2(0f, this.velocityY));
                 this.jumping = true;
             }

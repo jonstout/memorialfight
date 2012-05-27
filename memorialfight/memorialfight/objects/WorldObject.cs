@@ -35,9 +35,9 @@ namespace memorialfight.objects
             this.texture = texture;
 
             this.leftBar = new Rectangle(rect.X, rect.Y, 20, rect.Height);
-            this.rightBar = new Rectangle(rect.Width - 20, rect.Y, 20, rect.Height);
+            this.rightBar = new Rectangle(rect.X + rect.Width - 20, rect.Y, 20, rect.Height);
             this.topBar = new Rectangle(rect.X + 20, rect.Y, rect.Width - 40, 20);
-            this.bottomBar = new Rectangle(rect.X + 20, rect.Height - 20, rect.Width - 40, 20);
+            this.bottomBar = new Rectangle(rect.X + 20, rect.Y + rect.Height - 20, rect.Width - 40, 20);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -45,22 +45,22 @@ namespace memorialfight.objects
             spriteBatch.Draw(this.texture, this.pos, Color.White);
         }
 
-        public void Move(Vector2 pos)
+        public void Move(Vector2 velocity)
         {
             // Update this WorldObject's position
-            this.pos.X += pos.X;
-            this.pos.Y += pos.Y;
+            this.pos.X += velocity.X;
+            this.pos.Y += velocity.Y;
             // Update this WorldObject collision box's position
-            this.rect.X += (int)pos.X;
-            this.rect.Y += (int)pos.Y;
-            this.leftBar.X += (int)pos.X;
-            this.leftBar.Y += (int)pos.Y;
-            this.rightBar.X += (int)pos.X;
-            this.rightBar.Y += (int)pos.Y;
-            this.topBar.X += (int)pos.X;
-            this.topBar.Y += (int)pos.Y;
-            this.bottomBar.X += (int)pos.X;
-            this.bottomBar.Y += (int)pos.Y;
+            this.rect.X += (int)velocity.X;
+            this.rect.Y += (int)velocity.Y;
+            this.leftBar.X += (int)velocity.X;
+            this.leftBar.Y += (int)velocity.Y;
+            this.rightBar.X += (int)velocity.X;
+            this.rightBar.Y += (int)velocity.Y;
+            this.topBar.X += (int)velocity.X;
+            this.topBar.Y += (int)velocity.Y;
+            this.bottomBar.X += (int)velocity.X;
+            this.bottomBar.Y += (int)velocity.Y;
         }
     }
 }
