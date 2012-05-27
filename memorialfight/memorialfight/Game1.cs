@@ -76,7 +76,7 @@ namespace memorialfight
             Console.WriteLine(graphics.GraphicsDevice.Viewport.Height.ToString());
             Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
 
-            for (int i = 1; i < 17; i++)
+            for (int i = 0; i < 16; i++)
             {
                 groundPosition = new Vector2(120*i, groundPosition.Y);
                 groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
