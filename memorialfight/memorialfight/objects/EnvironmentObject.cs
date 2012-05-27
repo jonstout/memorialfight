@@ -13,12 +13,12 @@ using memorialfight.objects;
 
 namespace memorialfight.objects
 {
-    class EnvironmentObject : GameObject
+    class EnvironmentObject : WorldObject
     {
         private Texture2D texture;
 
         public EnvironmentObject(Vector2 pos, Rectangle rect, Texture2D texture) :
-            base(pos, rect)
+            base(pos, rect, texture)
         {
             this.texture = texture;
         }

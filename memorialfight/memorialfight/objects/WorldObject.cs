@@ -34,8 +34,8 @@ namespace memorialfight.objects
         {
             this.texture = texture;
 
-            this.leftBar = new Rectangle((int)pos.X, (int)pos.Y, 20, rect.Height);
-            this.rightBar = new Rectangle((int)pos.X + rect.Width - 20, (int)pos.Y, 20, rect.Height);
+            this.leftBar = new Rectangle((int)pos.X, (int)pos.Y + 20, 20, rect.Height - 40);
+            this.rightBar = new Rectangle((int)pos.X + rect.Width - 20, (int)pos.Y + 20, 20, rect.Height - 40);
             this.topBar = new Rectangle((int)pos.X + 20, (int)pos.Y, rect.Width - 40, 20);
             this.bottomBar = new Rectangle((int)pos.X + 20, (int)pos.Y + (rect.Height - 20), rect.Width - 40, 20);
         }

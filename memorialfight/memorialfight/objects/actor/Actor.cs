@@ -51,7 +51,7 @@ namespace memorialfight.objects.actor
                 float depth = (this.bottomBar.Y + this.bottomBar.Height) - r_rect.Y;
                 if (depth > 4)
                 {
-                    this.Position(new Vector2(this.pos.X, r_rect.Y - this.rect.Height + 1));
+                    this.Position(new Vector2(this.pos.X, r_rect.Y - this.rect.Height));
                 }
                 return true;
             }
@@ -75,10 +75,48 @@ namespace memorialfight.objects.actor
             return false;
         }
 
+        private Boolean UpAgainst(EnvironmentObject obj)
+        {
+            if (this.rightBar.Intersects(obj.leftBar))
+            {
+                float depth = (this.rightBar.X + this.bottomBar.Width) - obj.rect.X;
+                if (depth > 5)
+                {
+                    this.Position(new Vector2((obj.rect.X - this.rect.Width), this.pos.Y));
+                }
+                return true;
+            }
+            else if (this.leftBar.Intersects(obj.rightBar))
+            {
+                float depth = (obj.rect.Y + obj.rect.Width) - this.leftBar.X;
+                Console.WriteLine(depth.ToString());
+                if (depth > 5)
+                {
+                    this.Position(new Vector2(obj.rect.X + obj.rect.Width, this.pos.Y));
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Boolean WallCollision(LinkedList<EnvironmentObject> objects)
+        {
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (this.UpAgainst(objects.ElementAt(i)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public virtual void Update(LinkedList<EnvironmentObject> objects)
         {
             // Do ground collisions with environment
-            //this.GroundCollision(objects);
             if (!this.GroundCollision(objects))
             {
                 if (this.velocityY < this.maxAccelerationY)
@@ -86,7 +124,13 @@ namespace memorialfight.objects.actor
                     this.velocityY += this.accelerationY;
                 }
             }
-            Console.WriteLine(this.velocityX.ToString() + " " + this.velocityY.ToString());
+            // Check wall collisions with environment
+            if (this.WallCollision(objects))
+            {
+                this.velocityX = 0f;
+            }
+            
+            //Console.WriteLine(this.velocityX.ToString() + " " + this.velocityY.ToString());
             this.Move(new Vector2(this.velocityX, this.velocityY));
         }
 
