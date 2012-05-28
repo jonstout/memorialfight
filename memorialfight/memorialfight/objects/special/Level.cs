@@ -17,10 +17,35 @@ namespace memorialfight.objects.special
     class Level
     {
         private LinkedList<EnvironmentObject> envObjects;
+        private LinkedList<Player> players;
 
         public Level(LinkedList<Player> players, LinkedList<Texture2D> tileSet, String tileId, String tileType)
         {
+            this.players = players;
             this.envObjects = this.CreateEnvironment(tileId, tileType, tileSet);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            // Players
+            for (int i = 0; i < players.Count; i++)
+            {
+                this.players.ElementAt(i).Draw(spriteBatch);
+            }
+            
+            // EnvironmentObjects
+            for (int i = 0; i < envObjects.Count; i++)
+            {
+                this.envObjects.ElementAt(i).Draw(spriteBatch);
+            }
+        }
+
+        public void Update()
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                this.players.ElementAt(i).Update(envObjects);
+            }
         }
 
         private LinkedList<EnvironmentObject> CreateEnvironment(String tileId, String tileType, LinkedList<Texture2D> tileSet)
