@@ -26,12 +26,12 @@ namespace memorialfight
         Level level0;
         LinkedList<Player> players;
         LinkedList<Texture2D> level0TileSet;
+        Vector2 level0Position;
         String level0TileReference;
         String level0TileType;
 
         // Stuff to put in a class
         Player player1;
-        LinkedList<EnvironmentObject> world;
 
         public Game1()
         {
@@ -66,7 +66,6 @@ namespace memorialfight
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            world = new LinkedList<EnvironmentObject>();
             this.players = new LinkedList<Player>();
             this.level0TileSet = new LinkedList<Texture2D>();
 
@@ -76,43 +75,20 @@ namespace memorialfight
                 graphics.GraphicsDevice.Viewport.Height / 2);
             Rectangle sprite1Rect = new Rectangle((int)sprite1Position.X, (int)sprite1Position.Y, sprite1.Width, sprite1.Height);
             player1 = new Player(sprite1Position, sprite1Rect, sprite1, 1);
-            // [Level] Add Player to players
+            // [Level] Add Player to this.players
             this.players.AddLast(player1);
             
-            // Ground
+            // Load textures
             Texture2D woodTex = Content.Load<Texture2D>("sprites/wood");
-            Vector2 groundPosition = new Vector2(0, graphics.GraphicsDevice.Viewport.Height-400);
-            Console.WriteLine(graphics.GraphicsDevice.Viewport.Height.ToString());
-            Rectangle groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
-            // [Level] Ground to tileSet
+            
+            // [Level] Initialize levels
             this.level0TileSet.AddLast(woodTex);
-
-            float groundPosY = groundPosition.Y;
-            // [Level] Set levelSpawnPosition
-            Vector2 levelPosition = new Vector2(0f, groundPosY);
-            // [Level] Display type
+            this.level0Position = new Vector2(0, graphics.GraphicsDevice.Viewport.Height - 400);
             this.level0TileReference = "1,1,0,0,1,1,\n,1,1,1,0,1,1,1,1,1,1,\n,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1";
             this.level0TileType = "0,0,0,0,0,\n,1,1,1,0,1,1";
 
             // [Level]
-            this.level0 = new Level(this.players, this.level0TileSet, levelPosition, this.level0TileReference, this.level0TileType);
-
-            /*
-            for (int i = 0; i < 16; i++)
-            {
-                if (i == 0 || i == 15)
-                {
-                    groundPosition = new Vector2(120 * i, groundPosY - 120);
-                    groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
-                }
-                else
-                {
-                    groundPosition = new Vector2(120 * i, groundPosY);
-                    groundRect = new Rectangle((int)groundPosition.X, (int)groundPosition.Y, 120, 120);
-                }
-                
-                world.AddLast(new EnvironmentObject(groundPosition, groundRect, woodTex));
-            }*/
+            this.level0 = new Level(this.players, this.level0TileSet, level0Position, this.level0TileReference, this.level0TileType);
         }
 
         /// <summary>
@@ -138,11 +114,6 @@ namespace memorialfight
             // TODO: Add your update logic here
             this.level0.MovePlayer1(Keyboard.GetState());
             this.level0.Update();
-            
-            /*
-            player1.MovePlayer(Keyboard.GetState());
-            player1.Update(world);
-            */
 
             base.Update(gameTime);
         }
@@ -157,19 +128,10 @@ namespace memorialfight
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            // wObjTest works! Now onto the actor class then player class.
-            
-            /*player1.Draw(spriteBatch);
-            for (int i = 0; i < world.Count; i++)
-            {
-                world.ElementAt(i).Draw(spriteBatch);
-            }*/
-
             // [Level]
             this.level0.Draw(spriteBatch);
-
-            //ground.Draw(spriteBatch);
             spriteBatch.End();
+            
             base.Draw(gameTime);
         }
     }
