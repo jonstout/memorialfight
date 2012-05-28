@@ -43,7 +43,6 @@ namespace memorialfight.objects
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.texture, this.pos, Color.White);
-            spriteBatch.Draw(this.texture, this.bottomBar, Color.Wheat);
         }
 
         public void Move(Vector2 velocity)

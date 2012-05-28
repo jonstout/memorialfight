@@ -19,10 +19,10 @@ namespace memorialfight.objects.special
         private LinkedList<EnvironmentObject> envObjects;
         private LinkedList<Player> players;
 
-        public Level(LinkedList<Player> players, LinkedList<Texture2D> tileSet, String tileId, String tileType)
+        public Level(LinkedList<Player> players, LinkedList<Texture2D> tileSet, Vector2 levelPosition, String tileReference, String tileType)
         {
             this.players = players;
-            this.envObjects = this.CreateEnvironment(tileId, tileType, tileSet);
+            this.envObjects = this.CreateEnvironment(tileSet, levelPosition, tileReference, tileType);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -40,6 +40,11 @@ namespace memorialfight.objects.special
             }
         }
 
+        public void MovePlayer1(KeyboardState keyState)
+        {
+            this.players.ElementAt(0).MovePlayer(keyState);
+        }
+
         public void Update()
         {
             for (int i = 0; i < players.Count; i++)
@@ -48,19 +53,27 @@ namespace memorialfight.objects.special
             }
         }
 
-        private LinkedList<EnvironmentObject> CreateEnvironment(String tileId, String tileType, LinkedList<Texture2D> tileSet)
+        private LinkedList<EnvironmentObject> CreateEnvironment(LinkedList<Texture2D> tileSet, Vector2 levelPosition, String tileReference, String tileType)
         {
             LinkedList<EnvironmentObject> result = new LinkedList<EnvironmentObject>();
-            Vector2 pos = new Vector2(0f);
-            for (int i = 0; i < tileId.Length; i++)
+            Vector2 pos = levelPosition;
+            for (int i = 0; i < tileReference.Length; i++)
             {
-                Char tileRef = tileId.ElementAt(i);
+                Char tileRef = tileReference.ElementAt(i);
 
                 switch(tileRef)
                 {
                     case '0':
+                        pos.X += 120;
+                        break;
+                    case '1':
                         EnvironmentObject tmp = new EnvironmentObject(pos, new Rectangle((int)pos.X, (int)pos.Y, 120, 120), tileSet.ElementAt(0));
                         result.AddLast(tmp);
+                        pos.X += 120;
+                        break;
+                    case '\n':
+                        pos.X = levelPosition.X;
+                        pos.Y += 120;
                         break;
                     default:
                         Console.WriteLine("Nothing added");
