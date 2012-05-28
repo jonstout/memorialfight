@@ -23,8 +23,6 @@ namespace memorialfight
         
         // Stuff to put in a class
         Player player1;
-        EnvironmentObject ground;
-
         LinkedList<EnvironmentObject> world;
 
         public Game1()
