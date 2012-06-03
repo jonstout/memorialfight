@@ -6,6 +6,4 @@
 *.cachefile
 memorialfight/memorialfight/bin/
 memorialfight/memorialfightContent/obj/x86/Debug/ContentPipeline.xml
-memorialfight/memorialfight/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-memorialfight/memorialfightContent/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 *.psd
