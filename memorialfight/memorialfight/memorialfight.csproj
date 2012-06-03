@@ -111,6 +111,7 @@
     <Compile Include="objects\actor\Player.cs" />
     <Compile Include="objects\EnvironmentObject.cs" />
     <Compile Include="objects\GameObject.cs" />
+    <Compile Include="objects\special\Camera.cs" />
     <Compile Include="objects\special\Level.cs" />
     <Compile Include="objects\WorldObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

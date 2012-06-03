@@ -80,15 +80,21 @@ namespace memorialfight
             
             // Load textures
             Texture2D woodTex = Content.Load<Texture2D>("sprites/wood");
+            Texture2D grassTex = Content.Load<Texture2D>("sprites/grass");
             
             // [Level] Initialize levels
             this.level0TileSet.AddLast(woodTex);
+            this.level0TileSet.AddLast(grassTex);
             this.level0Position = new Vector2(0, graphics.GraphicsDevice.Viewport.Height - 400);
-            this.level0TileReference = "1,1,0,0,1,1,\n,1,1,1,0,1,1,1,1,1,1,\n,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1";
+            this.level0TileReference = "1,1,0,0,1,1,\n,1,1,2,0,1,1,1,1,1,1,\n,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2";
             this.level0TileType = "0,0,0,0,0,\n,1,1,1,0,1,1";
 
             // [Level]
-            this.level0 = new Level(this.players, this.level0TileSet, level0Position, this.level0TileReference, this.level0TileType);
+
+            Camera cam = new Camera(new Rectangle(graphics.GraphicsDevice.Viewport.X, graphics.GraphicsDevice.Viewport.Y, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height),
+                this.players.ElementAt(0).pos);
+
+            this.level0 = new Level(cam, this.players, this.level0TileSet, level0Position, this.level0TileReference, this.level0TileType);
         }
 
         /// <summary>

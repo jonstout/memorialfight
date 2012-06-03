@@ -41,6 +41,7 @@ namespace memorialfight.objects.actor
             {
                 this.Jump();
             }
+            Console.WriteLine(this.pos.ToString());
         }
     }
 }

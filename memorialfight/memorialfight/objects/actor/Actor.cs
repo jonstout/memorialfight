@@ -89,7 +89,6 @@ namespace memorialfight.objects.actor
             else if (this.leftBar.Intersects(obj.rightBar))
             {
                 float depth = (obj.rect.Y + obj.rect.Width) - this.leftBar.X;
-                Console.WriteLine(depth.ToString());
                 if (depth > 5)
                 {
                     this.Position(new Vector2(obj.rect.X + obj.rect.Width, this.pos.Y));

@@ -19,30 +19,43 @@ namespace memorialfight.objects.special
         private LinkedList<EnvironmentObject> envObjects;
         private LinkedList<Player> players;
 
-        public Level(LinkedList<Player> players, LinkedList<Texture2D> tileSet, Vector2 levelPosition, String tileReference, String tileType)
+        private Camera camera;
+
+        public Level(Camera camera, LinkedList<Player> players, LinkedList<Texture2D> tileSet, Vector2 levelPosition, String tileReference, String tileType)
         {
             this.players = players;
             this.envObjects = this.CreateEnvironment(tileSet, levelPosition, tileReference, tileType);
+
+            this.camera = camera;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Vector2 tmp = new Vector2();
             // Players
             for (int i = 0; i < players.Count; i++)
             {
+                tmp = this.players.ElementAt(i).pos;
+                this.players.ElementAt(i).Position(this.camera.DrawPosition(this.players.ElementAt(i).pos));
                 this.players.ElementAt(i).Draw(spriteBatch);
+                this.players.ElementAt(i).Position(tmp);
             }
             
             // EnvironmentObjects
             for (int i = 0; i < envObjects.Count; i++)
             {
+                tmp = this.envObjects.ElementAt(i).pos;
+                this.envObjects.ElementAt(i).Position(this.camera.DrawPosition(this.envObjects.ElementAt(i).pos));
                 this.envObjects.ElementAt(i).Draw(spriteBatch);
+                this.envObjects.ElementAt(i).Position(tmp);
             }
         }
 
         public void MovePlayer1(KeyboardState keyState)
         {
             this.players.ElementAt(0).MovePlayer(keyState);
+
+            this.camera.Update(this.players.ElementAt(0).pos);
         }
 
         public void Update()
@@ -69,6 +82,11 @@ namespace memorialfight.objects.special
                     case '1':
                         EnvironmentObject tmp = new EnvironmentObject(pos, new Rectangle((int)pos.X, (int)pos.Y, 120, 120), tileSet.ElementAt(0));
                         result.AddLast(tmp);
+                        pos.X += 120;
+                        break;
+                    case '2':
+                        EnvironmentObject tmp1 = new EnvironmentObject(pos, new Rectangle((int)pos.X, (int)pos.Y, 120, 120), tileSet.ElementAt(1));
+                        result.AddLast(tmp1);
                         pos.X += 120;
                         break;
                     case '\n':
