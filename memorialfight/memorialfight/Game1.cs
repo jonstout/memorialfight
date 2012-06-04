@@ -80,7 +80,7 @@ namespace memorialfight
             
             // Load textures
             Texture2D woodTex = Content.Load<Texture2D>("sprites/wood");
-            Texture2D grassTex = Content.Load<Texture2D>("sprites/grass");
+            Texture2D grassTex = Content.Load<Texture2D>("sprites/ground");
             
             // [Level] Initialize levels
             this.level0TileSet.AddLast(woodTex);
