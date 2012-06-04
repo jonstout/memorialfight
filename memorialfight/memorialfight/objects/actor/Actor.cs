@@ -67,6 +67,7 @@ namespace memorialfight.objects.actor
             {
                 if (this.StandingOn(objects.ElementAt(i).rect))
                 {
+                    this.Position(new Vector2(this.pos.X, objects.ElementAt(i).rect.Top - this.rect.Height));
                     this.jumping = false;
                     return true;
                 }
