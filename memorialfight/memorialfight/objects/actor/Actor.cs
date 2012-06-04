@@ -31,8 +31,8 @@ namespace memorialfight.objects.actor
             base(pos, rect, texture)
         {
             this.maxAccelerationX = 5.4f;
-            this.maxAccelerationY = 1.3f;
-            this.accelerationY = 6.5f;
+            this.maxAccelerationY = 16f;
+            this.accelerationY = 5f;
             this.accelerationX = .3f;
             this.jumping = true;
         }
@@ -169,7 +169,7 @@ namespace memorialfight.objects.actor
         {
             if (!this.jumping)
             {
-                this.velocityY = -45f;
+                this.velocityY = -70f;
                 this.jumping = true;
             }
         }
