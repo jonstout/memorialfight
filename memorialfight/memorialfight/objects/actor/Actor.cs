@@ -116,13 +116,18 @@ namespace memorialfight.objects.actor
 
         public virtual void Update(LinkedList<EnvironmentObject> objects)
         {
+            this.Move(new Vector2(this.velocityX, this.velocityY));
             // Do ground collisions with environment
-            if (!this.GroundCollision(objects))
+            if (!this.GroundCollision(objects) && this.jumping)
             {
                 if (this.velocityY < this.maxAccelerationY)
                 {
                     this.velocityY += this.accelerationY;
                 }
+            }
+            else
+            {
+                this.velocityY = 0f;
             }
             // Check wall collisions with environment
             if (this.WallCollision(objects))
@@ -131,7 +136,7 @@ namespace memorialfight.objects.actor
             }
             
             //Console.WriteLine(this.velocityX.ToString() + " " + this.velocityY.ToString());
-            this.Move(new Vector2(this.velocityX, this.velocityY));
+            //this.Move(new Vector2(this.velocityX, this.velocityY));
         }
 
         public void MoveLeft()
