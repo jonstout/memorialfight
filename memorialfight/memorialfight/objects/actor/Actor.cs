@@ -118,7 +118,7 @@ namespace memorialfight.objects.actor
         {
             this.Move(new Vector2(this.velocityX, this.velocityY));
             // Do ground collisions with environment
-            if (!this.GroundCollision(objects) && this.jumping)
+            if (!this.GroundCollision(objects))
             {
                 if (this.velocityY < this.maxAccelerationY)
                 {

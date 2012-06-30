@@ -89,6 +89,16 @@ namespace memorialfight.objects.special
                         result.AddLast(tmp1);
                         pos.X += 120;
                         break;
+                    case '3':
+                        EnvironmentObject tmp2 = new EnvironmentObject(pos, new Rectangle((int)pos.X, (int)pos.Y, 120, 120), tileSet.ElementAt(2));
+                        result.AddLast(tmp2);
+                        pos.X += 120;
+                        break;
+                    case '4':
+                        EnvironmentObject tmp3 = new EnvironmentObject(pos, new Rectangle((int)pos.X, (int)pos.Y, 120, 120), tileSet.ElementAt(3));
+                        result.AddLast(tmp3);
+                        pos.X += 120;
+                        break;
                     case '\n':
                         pos.X = levelPosition.X;
                         pos.Y += 120;

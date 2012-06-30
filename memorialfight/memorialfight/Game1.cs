@@ -81,12 +81,16 @@ namespace memorialfight
             // Load textures
             Texture2D woodTex = Content.Load<Texture2D>("sprites/wood");
             Texture2D grassTex = Content.Load<Texture2D>("sprites/ground");
-            
+            Texture2D crateTex = Content.Load<Texture2D>("sprites/crate");
+            Texture2D brickTex = Content.Load<Texture2D>("sprites/brick");
+
             // [Level] Initialize levels
             this.level0TileSet.AddLast(woodTex);
             this.level0TileSet.AddLast(grassTex);
+            this.level0TileSet.AddLast(crateTex);
+            this.level0TileSet.AddLast(brickTex);
             this.level0Position = new Vector2(0, graphics.GraphicsDevice.Viewport.Height - 400);
-            this.level0TileReference = "1,1,0,0,1,1,\n,1,1,2,0,1,1,1,1,1,1,\n,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2";
+            this.level0TileReference = "4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,\n,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,\n,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,\n,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,\n,4,4,3,3,3,3,0,0,0,0,0,0,0,0,0,0,4,\n,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,\n,4,4,0,0,0,0,3,3,3,0,0,0,0,0,0,0,4,\n,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,\n,4,4,1,1,0,0,0,0,0,0,3,3,0,0,0,0,4,\n,4,4,1,1,1,1,0,0,1,1,1,1,0,0,0,1,4,\n,4,4,1,1,1,1,2,2,1,1,1,1,1,2,1,1,4,\n";
             this.level0TileType = "0,0,0,0,0,\n,1,1,1,0,1,1";
 
             // [Level]
